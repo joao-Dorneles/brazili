@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brazili</title>
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <style>
+        /* Reset básico */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --bg: #f8fafc;
+            --dark: #0f172a;
+            --soft: #e2e8f0;
+        }
+
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--soft);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logos {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logoImg {
+            width: 40px;
+            border-radius: 100%;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        /* NAV */
+        nav {
+            position: relative;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: #334155;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* BURGER */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 24px;
+            height: 3px;
+            background: #0f172a;
+            transition: 0.3s;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: auto;
+            padding: 5rem 8%;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            background: radial-gradient(circle at top left, #e0e7ff, #f8fafc 60%);
+            padding-top: 6rem;
+            padding-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(238, 253, 165, 0.25), transparent 40%),
+                radial-gradient(circle at 80% 60%, rgba(251, 255, 196, 0.25), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15), transparent 60%);
+            animation: floatBG 20s linear infinite;
+            z-index: 0;
+        }
+
+        /* glow flutuante */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.35), transparent 60%);
+            filter: blur(80px);
+            top: -200px;
+            left: -200px;
+            animation: glowMove 18s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        /* garante que conteúdo fique acima */
+        .hero>*:not(.hero-bg):not(.hero-glow) {
+            position: relative;
+            z-index: 2;
+        }
+
+        .slogan {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .brazili {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bags {
+            max-width: 480px;
+            justify-self: center;
+            filter: drop-shadow(0 40px 50px rgba(0, 0, 0, 0.15));
+        }
+
+        /* PRODUCTS */
+        .products {
+            padding: 5rem 0rem;
+            background: #fafafa;
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            margin-bottom: 3rem;
+            color: #111;
+        }
+
+        /* Galeria */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        /* Cada foto vira o card */
+        .carousel-wrapper {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.2rem;
+            padding: 1rem 2rem 1.5rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+        /* scrollbar moderna */
+        .carousel-track::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .carousel-track::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb {
+            background: #d0d0d0;
+            border-radius: 10px;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb:hover {
+            background: #b5b5b5;
+        }
+
+        .carousel-track {
+            cursor: pointer;
+        }
+
+
+        /* remove scrollbar */
+        .carousel-track {
+            scrollbar-width: thin;
+            scrollbar-color: #d0d0d0 transparent;
+        }
+
+        /* cada card é um post do Instagram */
+        .product-card {
+            flex: 0 0 260px;
+            /* largura fixa tipo feed */
+            aspect-ratio: 4 / 5;
+            /* formato Instagram */
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        /* imagem ocupa tudo */
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .6s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.07);
+        }
+
+        /* overlay */
+        .product-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .1));
+            opacity: 0;
+            transition: .4s;
+        }
+
+        .product-card h3,
+        .product-card p {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            color: white;
+            z-index: 2;
+            opacity: 0;
+            transition: .4s;
+        }
+
+        .product-card h3 {
+            bottom: 2.2rem;
+            font-size: 1.1rem;
+        }
+
+        .product-card p {
+            bottom: 1.2rem;
+            font-size: .85rem;
+            opacity: .85;
+        }
+
+        .product-card:hover::after,
+        .product-card:hover h3,
+        .product-card:hover p {
+            opacity: 1;
+        }
+
+
+        /* Título */
+        .product-card h3 {
+            bottom: 2.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Descrição */
+        .product-card p {
+            bottom: 1.1rem;
+            font-size: .85rem;
+            color: rgba(255, 255, 255, .85);
+        }
+
+        /* Fundo escuro no hover */
+        .product-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(0, 0, 0, .7),
+                    rgba(0, 0, 0, .15));
+            opacity: 0;
+            transition: .4s ease;
+        }
+
+        /* Ativa o overlay */
+        .product-card:hover::after,
+        .product-card:hover h3,
+        .product-card:hover p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* ABOUT */
+        .about {
+            padding: 6rem 15%;
+            background: white;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        /* CONTACT */
+        .contact {
+            padding: 6rem 10%;
+            background: linear-gradient(135deg, #f1f5ff, #ffffff);
+        }
+
+        .contact h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact form {
+            max-width: 520px;
+            margin: auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact input,
+        .contact textarea {
+            padding: 0.9rem;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .contact button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: #cbd5f5;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-links,
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a,
+        .footer-social a {
+            color: #cbd5f5;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover,
+        .footer-social a:hover {
+            color: var(--primary);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            font-weight: 500;
+            color: #e2e8f0;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 560px) {
+            footer {
+                padding: 2rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .footer-links,
+            .footer-social {
+
+                gap: 0.5rem;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+                min-height: 50rem;
+            }
+
+            .slogan {
+                font-size: 2.3rem;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                width: 200px;
+                padding: 1rem;
+                display: none;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links li {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+
+            .nav-active {
+                display: flex;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .burger.toggle div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 7px);
+            }
+
+            .burger.toggle div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger.toggle div:nth-child(3) {
+                transform: rotate(-45deg) translate(4px, -7px);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 4rem;
+                padding-bottom: 3rem;
+                gap: 2.5rem;
+            }
+
+            .slogan {
+                font-size: 1.9rem;
+                line-height: 1.2;
+                margin-top: 5rem;
+            }
+
+            .bags {
+                max-width: 85%;
+            }
+        }
+
+        @keyframes floatBG {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-40px, 30px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes glowMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(300px, 200px);
+            }
+
+        }
+
+        #typewriter::after {
+            content: "|";
+            margin-left: 3px;
+            animation: blink 1s infinite;
+            color: rgba(15, 23, 42, 0.5);
+            font-weight: 300;
+        }
+
+
+        @keyframes blink {
+
+            0%,
+            45% {
+                opacity: 1;
+            }
+
+            46%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 900px;
+            margin: auto;
+            align-items: center;
+        }
+
+        .contact-text p {
+            font-size: 1.05rem;
+            color: #475569;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .insta-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #f09433, #e1306c, #c13584);
+            color: white;
+            padding: 0.9rem 1.6rem;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .insta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .insta-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: 0.4s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .insta-card img {
+            width: 120px;
+            margin: auto;
+            margin-bottom: 1rem;
+        }
+
+        .insta-card span {
+            font-weight: 600;
+            color: #334155;
+            font-size: 1.1rem;
+        }
+
+        .insta-card:hover {
+            transform: translateY(-10px);
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .perfilInsta {
+            border-radius: 50%;
+        }
+
+        /* Minimal Music Player */
+        .music-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--soft);
+            border-radius: 999px;
+            padding: 6px 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Botões */
+        .music-player button {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: #334155;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Play com gradiente */
+        #playBtn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        /* Pulso quando tocando */
+        .music-player.playing #playBtn {
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Track info */
+        .track-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 120px;
+        }
+
+        #trackName {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #334155;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Barra de progresso */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* Pulso */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+
+        /* Mobile: diminui o nome */
+        @media (max-width: 506px) {
+            .music-player {
+                padding: 5px 10px;
+                gap: 6px;
+            }
+
+            .track-info {
+                min-width: 70px;
+            }
+
+            #trackName {
+                font-size: 0.6rem;
+                max-width: 70px;
+            }
+
+            .progress-bar {
+                height: 3px;
+            }
+        }
+
+        @media (max-width: 434px) {
+            .track-info {
+                min-width: 55px;
+            }
+
+            #trackName {
+                max-width: 55px;
+                font-size: 0.58rem;
+            }
+
+            .music-player {
+                gap: 5px;
+                padding: 5px 8px;
+            }
+        }
+
+        @media (max-width: 407px) {
+            .track-info {
+                min-width: 48px;
+            }
+
+            #trackName {
+                max-width: 48px;
+                font-size: 0.56rem;
+            }
+
+            .music-player {
+                gap: 4px;
+                padding: 4px 7px;
+            }
+
+            .progress-bar {
+                height: 2px;
+            }
+        }
+
+        @media (max-width: 405px) {
+            .track-info {
+                min-width: 40px;
+            }
+
+            #trackName {
+                max-width: 40px;
+                font-size: 0.55rem;
+                opacity: 0.7;
+            }
+
+            .progress-bar {
+                height: 2px;
+            }
+        }
+
+        @media (max-width: 386px) {
+            .track-info {
+                min-width: 28px;
+            }
+
+            #trackName {
+                max-width: 28px;
+                font-size: 0.48rem;
+                opacity: 0.55;
+                letter-spacing: 0.2px;
+            }
+
+            .music-player {
+                gap: 2px;
+                padding: 3px 5px;
+            }
+
+            .progress-bar {
+                height: 1.5px;
+            }
+
+            .music-player button {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 366px) {
+            .music-player {
+                padding: 2px 4px;
+                gap: 2px;
+            }
+
+            .music-player button {
+                transform: scale(0.7);
+            }
+
+            .track-info {
+                min-width: 20px;
+            }
+
+            #trackName {
+                max-width: 20px;
+                font-size: 0.4rem;
+                opacity: 0.5;
+            }
+
+            .progress-bar {
+                height: 1px;
+            }
+        }
+
+        @media (max-width: 355px) {
+            .track-info {
+                display: none;
+            }
+        }
+
+
+        #listBtn {
+            background: transparent;
+            border: none;
+            color: #334155;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Playlist popup */
+        .playlist {
+            position: absolute;
+            top: 110%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 14px;
+            border: 1px solid var(--soft);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            padding: 8px;
+            width: 180px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 999;
+        }
+
+        .playlist .track {
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #334155;
+        }
+
+        .playlist .track:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .playlist .track.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logos">
+            <img src="./images/logo.png" alt="logo" class="logoImg">
+            <div class="logo">Brazili</div>
+            <div class="music-player">
+                <button id="prevBtn">|◁◁</button>
+                <button id="playBtn">▷</button>
+                <button id="nextBtn">▷▷|</button>
+
+                <div class="track-info">
+                    <span id="trackName">Brazili Vibes</span>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+
+                <button id="listBtn">⌵</button>
+
+                <div class="playlist">
+                    <div class="track" data-index="0">Tempo Perdido</div>
+                    <div class="track" data-index="1">Garota de Ipanema</div>
+                    <div class="track" data-index="2">Céu Azul</div>
+                    <div class="track" data-index="3">Mina de Condomínio</div>
+                    <div class="track" data-index="4">Um Bom Lugar</div>
+                </div>
+
+                <audio id="bgMusic"></audio>
+            </div>
+
+        </div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#products">Produtos</a></li>
+                <li><a href="duvidas.html">Dúvidas</a></li>
+                <li><a href="#about">História</a></li>
+                <li><a href="#contact">Realizar Pedido</a></li>
+            </ul>
+            <div class="burger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero / Banner -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-glow"></div>
+
+        <h1 class="slogan"><span class="brazili">Brazili</span><br>
+            <span id="typewriter"></span>
+        </h1>
+        <img src="./images/bags.png" alt="Bags" class="bags">
+    </section>
+
+    <!-- Produtos -->
+    <section class="products" id="products">
+        <h2>Conheça Alguns de Nossos Produtos</h2>
+
+        <div class="carousel-wrapper">
+            <div class="carousel-track">
+
+                <div class="product-card">
+                    <img src="./images/model2.jpeg" alt="Produto 1">
+                    <h3>Ecobag Jesus Loves you</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model3.jpeg" alt="Produto 2">
+                    <h3>Ecobag Song of Solomon 2:2</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model1.jpeg" alt="Produto 3">
+                    <h3>Ecobag Símbolos Brasileiros</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model4.jpeg" alt="Produto 3">
+                    <h3>Ecobag Kaonashi A Viagem de Chihiro</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model6.jpeg" alt="Produto 3">
+                    <h3>Ecobag Lençóis Maranhenses</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model7.jpeg" alt="Produto 3">
+                    <h3>Ecobag Nordeste Brasileiro</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model8.jpeg" alt="Produto 3">
+                    <h3>Ecobag Sangue Latino</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model9.jpeg" alt="Produto 3">
+                    <h3>Ecobag Pós-Impressionista</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model10.jpeg" alt="Produto 3">
+                    <h3>Ecobag Charlie Brown Jr</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model11.jpeg" alt="Produto 3">
+                    <h3>Ecobag BK e Sabotage</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="./images/model12.jpeg" alt="Produto 3">
+                    <h3>Ecobag Meu Amigo Totoro</h3>
+                    <p>Mais detalhes em <a
+                            href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><u>@brazili.oficial</u></a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- História -->
+    <section class="about" id="about">
+        <h2>Quem Somos?</h2>
+        <p>A Brazili nasceu do desejo de transformar arte em presença, trazendo propósito para o dia a dia através das
+            nossas ecobags.
+
+            Aqui, cada detalhe carrega intenção, afeto e identidade.
+            Somos mais do que uma loja — somos um espaço onde o feito à mão encontra significado, onde o simples ganha
+            alma, e cada criação reflete a essência de quem somos: múltiplos, brasileiros, sensíveis e fortes.</p>
+    </section>
+
+    <!-- Contato -->
+    <section class="contact" id="contact">
+        <h2>Fale com a Brazili</h2>
+
+        <div class="contact-wrapper">
+            <div class="contact-text">
+                <p>
+                    Para realizar pedidos ou tirar dúvidas, fale direto com a gente no Instagram.
+                    É por lá que atendemos, enviamos fotos, valores e combinamos os detalhes.
+                </p>
+
+                <a href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                    target="_blank" class="insta-btn">
+                    Falar no Instagram
+                </a>
+            </div>
+
+            <a href="https://www.instagram.com/brazili.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                target="_blank" class="insta-card">
+                <img class="perfilInsta" src="./images/logo.png" alt="Instagram Brazili">
+                <span>@brazili.oficial</span>
+            </a>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <span id="year"></span> Brazili. Todos os direitos reservados.</p>
+
+        <div class="footer-links">
+            <a href="#products">Produtos</a> |
+            <a href="duvidas.html">Dúvidas</a> |
+            <a href="#about">História</a> |
+            <a href="#contact">Realizar Pedido</a>
+        </div>
+
+        <div class="footer-social">
+            <a href="https://www.instagram.com/brazili.oficial/" target="_blank">Instagram</a>
+        </div>
+
+        <p class="footer-tagline">ECOBAGS BRAZILI</p>
+    </footer>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <script>
+        // Script para o menu hamburguer
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+
+        burger.addEventListener('click', (e) => {
+            e.stopPropagation();   // impede o clique de subir pro document
+            nav.classList.toggle('nav-active');
+            burger.classList.toggle('toggle');
+        });
+
+
+        const phrases = [
+            "Onde a arte encontra a essência do feito à mão.",
+            "Ecobags que carregam alma, propósito e a verdadeira brasilidade.",
+            "Feito à mão, com alma e significado — Brazili, onde o simples é sublime.",
+            "A brasilidade traduzida em arte, propósito e delicadeza.",
+            "Cada ecobag, uma expressão de alma e identidade."
+        ];
+
+        let currentPhrase = 0;
+        let currentChar = 0;
+        let isDeleting = false;
+        const typeSpeed = 35;
+        const delay = 900;
+
+
+        const el = document.getElementById("typewriter");
+
+        function typeEffect() {
+            const text = phrases[currentPhrase];
+
+            if (!isDeleting) {
+                el.textContent = text.substring(0, currentChar + 1);
+                currentChar++;
+
+                if (currentChar === text.length) {
+                    setTimeout(() => isDeleting = true, delay);
+                }
+            } else {
+                el.textContent = text.substring(0, currentChar - 1);
+                currentChar--;
+
+                if (currentChar === 0) {
+                    isDeleting = false;
+                    currentPhrase = (currentPhrase + 1) % phrases.length;
+                }
+            }
+
+            setTimeout(typeEffect, isDeleting ? typeSpeed / 1.5 : typeSpeed);
+
+        }
+
+        typeEffect();
+
+        document.addEventListener("click", (e) => {
+            if (
+                nav.classList.contains("nav-active") &&
+                !nav.contains(e.target) &&
+                !burger.contains(e.target)
+            ) {
+                nav.classList.remove("nav-active");
+                burger.classList.remove("toggle");
+            }
+        });
+
+    </script>
+    <script>
+        const track = document.querySelector('.carousel-track');
+        const cards = Array.from(track.children);
+        const speed = 2; // pixels por frame, ajuste para mais rápido ou mais lento
+
+        // Clonar todos os cards para criar loop infinito
+        cards.forEach(card => {
+            const clone = card.cloneNode(true);
+            track.appendChild(clone);
+        });
+
+        let scrollPosition = 0;
+        let isUserScrolling = false;
+
+        // Detecta interação do usuário
+        track.addEventListener('mousedown', () => isUserScrolling = true);
+        track.addEventListener('mouseup', () => isUserScrolling = false);
+        track.addEventListener('mouseleave', () => isUserScrolling = false);
+        track.addEventListener('touchstart', () => isUserScrolling = true);
+        track.addEventListener('touchend', () => isUserScrolling = false);
+
+        // Atualiza a posição se o usuário mexer
+        track.addEventListener('scroll', () => {
+            if (isUserScrolling) {
+                scrollPosition = track.scrollLeft;
+            }
+        });
+
+        // Scroll automático em loop contínuo
+        function autoScroll() {
+            if (!isUserScrolling) {
+                scrollPosition += speed;
+                track.scrollLeft = scrollPosition;
+
+                // Quando chegar na metade (onde começam os clones), reseta sem perceber
+                if (scrollPosition >= track.scrollWidth / 2) {
+                    scrollPosition = 0;
+                    track.scrollLeft = 0;
+                }
+            }
+
+            requestAnimationFrame(autoScroll);
+        }
+
+        // Inicia o loop
+        requestAnimationFrame(autoScroll);
+    </script>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script>
+        const playlist = [
+            { name: "Tempo Perdido", file: "./audio/tempoPerdido.mp3" },
+            { name: "Garota de Ipanema", file: "./audio/garotadeIpanema.mp3" },
+            { name: "Céu Azul", file: "./audio/ceuAzul.mp3" },
+            { name: "Mina de Condomínio", file: "./audio/minaDeCondominio.mp3" },
+            { name: "Um Bom Lugar", file: "./audio/umbomLugar.mp3" }
+        ];
+
+        let current = 0;
+
+        const music = document.getElementById("bgMusic");
+        const playBtn = document.getElementById("playBtn");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const trackName = document.getElementById("trackName");
+        const progress = document.querySelector(".progress");
+        const player = document.querySelector(".music-player");
+        const listBtn = document.getElementById("listBtn");
+        const playlistBox = document.querySelector(".playlist");
+        const tracks = document.querySelectorAll(".playlist .track");
+
+        function loadTrack() {
+            music.src = playlist[current].file;
+            trackName.textContent = playlist[current].name;
+
+            tracks.forEach(t => t.classList.remove("active"));
+            tracks[current].classList.add("active");
+        }
+
+        loadTrack();
+
+        /* Play */
+        playBtn.addEventListener("click", () => {
+            if (music.paused) {
+                music.play();
+                playBtn.textContent = "❚❚";
+                player.classList.add("playing");
+            } else {
+                music.pause();
+                playBtn.textContent = "▷";
+                player.classList.remove("playing");
+            }
+        });
+
+        /* Next / Prev */
+        nextBtn.onclick = () => { current = (current + 1) % playlist.length; loadTrack(); music.play(); };
+        prevBtn.onclick = () => { current = (current - 1 + playlist.length) % playlist.length; loadTrack(); music.play(); };
+
+        /* Progresso */
+        music.addEventListener("timeupdate", () => {
+            const percent = (music.currentTime / music.duration) * 100;
+            progress.style.width = percent + "%";
+        });
+
+        /* Auto next */
+        music.addEventListener("ended", () => nextBtn.click());
+
+        /* Abrir playlist */
+        listBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            playlistBox.style.display = playlistBox.style.display === "flex" ? "none" : "flex";
+        });
+
+
+        /* Selecionar faixa */
+        tracks.forEach(track => {
+            track.addEventListener("click", () => {
+                current = Number(track.dataset.index);
+                loadTrack();
+                music.play();
+                playBtn.textContent = "❚❚";
+                player.classList.add("playing");
+                playlistBox.style.display = "none";
+            });
+        });
+
+        document.addEventListener("click", (e) => {
+            const player = document.querySelector(".music-player");
+            const playlist = document.querySelector(".playlist");
+            const listBtn = document.getElementById("listBtn");
+
+            if (!player.contains(e.target) && playlist.style.display === "flex") {
+                playlist.style.display = "none";
+            }
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
